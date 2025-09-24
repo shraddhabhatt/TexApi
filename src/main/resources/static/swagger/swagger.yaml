@@ -1,0 +1,151 @@
+openapi: 3.0.3
+info:
+  title: Job Portal API
+  description: API documentation for Job Portal application.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+  
+paths:
+  /job:
+    put:
+      tags:
+        - job
+      summary: Update/Edit an existing job.
+      description: Update an existing job post
+      operationId: editJob
+      requestBody:
+        description: Update an existing job post
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Job'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+            
+        '400':
+          description: Invalid Job Id
+        '404':
+          description: Job not found
+        '422':
+          description: Validation exception
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - job
+      summary: Add a new Job to the portal.
+      description: Add a new Job to the portal.
+      operationId: postJob
+      requestBody:
+        description: Create a new Job in the portal
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Job'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+            
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        
+  
+components:
+  schemas:
+    Job:
+      required:
+        - job_title
+        - job_description
+        
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        job_title:
+          type: string
+          description: Job title to display in the portal
+        job_description:
+          type: string
+          description: Job description with details
+        job_responsibilities:
+          type: string
+          description: Job highlights that are the core responsibilities
+        employment_type:
+          type: string
+          description: Job employment type 
+          enum:
+            - Full-time
+            - Part-time
+            - Contract
+        work_mode:
+          type: string
+          description: work mode 
+          enum:
+            - On-site
+            - Remote
+            - Hybrid
+        location:
+          type: string
+          description: Location of job in city, state formate
+        active_status:
+          type: boolean
+          description: is job still actively hiring or not
+          default: true
+        visa_sponsorship:
+          type: boolean
+          description: If the job is available for visa sponsorship
+          default: true
+        visa_type:
+          type: string
+          description: Types of Visa that are eligible for this job
+        create_time:
+          type: string
+          format: date-time
+          description: Job Creation datetime
+        update_time:
+          type: string
+          format: date-time
+          description: Job Update datetime managed by trigger 
+      xml:
+        name: Job
+    
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+  
+  
