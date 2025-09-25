@@ -74,6 +74,25 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+    get:
+      summary: Get all jobs
+      description: Returns a list of all jobs in the system.
+      operationId: getAllJobs
+      tags:
+        - job
+      responses:
+        '200':
+          description: A list of jobs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+        '404':
+          description: No jobs found
+        '500':
+          description: Internal server error
         
   
 components:
@@ -123,6 +142,12 @@ components:
         location:
           type: string
           description: Location of job in city, state formate
+        salary_min:
+          type: number
+          format: double
+        salary_max:
+          type: number
+          format: double
         active_status:
           type: boolean
           description: is job still actively hiring or not

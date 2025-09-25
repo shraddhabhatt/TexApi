@@ -24,6 +24,8 @@ public class JobMapper {
         entity.setActiveStatus(model.getActiveStatus() != null ? model.getActiveStatus() : true);
         entity.setVisaSponsorship(model.getVisaSponsorship() != null ? model.getVisaSponsorship() : false);
         entity.setVisaType(model.getVisaType());
+        entity.setSalaryMin(model.getSalaryMin());
+        entity.setSalaryMax(model.getSalaryMax());
         entity.setCreateTime(model.getCreateTime() != null ? model.getCreateTime() : OffsetDateTime.now());
         entity.setUpdateTime(OffsetDateTime.now());
         
@@ -60,6 +62,8 @@ public class JobMapper {
         model.setActiveStatus(entity.getActiveStatus());
         model.setVisaSponsorship(entity.getVisaSponsorship());
         model.setVisaType(entity.getVisaType());
+        model.setSalaryMin(entity.getSalaryMin());
+        model.setSalaryMax(entity.getSalaryMax());
         model.setCreateTime(entity.getCreateTime());
         model.setUpdateTime(entity.getUpdateTime());
         

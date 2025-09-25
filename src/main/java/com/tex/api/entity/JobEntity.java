@@ -46,6 +46,12 @@ public class JobEntity {
 
     @Column(name = "visa_type", length = 5)
     private String visaType;
+    
+    @Column(name = "salary_min")
+    private Double salaryMin;
+
+    @Column(name = "salary_max")
+    private Double salaryMax;
 
     @Column(name = "create_time", columnDefinition = "TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP")
     private OffsetDateTime createTime;
@@ -155,6 +161,22 @@ public class JobEntity {
         this.visaType = visaType;
     }
 
+    public Double getSalaryMin() {
+        return salaryMin;
+    }
+
+    public void setSalaryMin(Double salaryMin) {
+        this.salaryMin = salaryMin;
+    }
+
+    public Double getSalaryMax() {
+        return salaryMax;
+    }
+
+    public void setSalaryMax(Double salaryMax) {
+        this.salaryMax = salaryMax;
+    }
+    
     public OffsetDateTime getCreateTime() {
         return createTime;
     }
