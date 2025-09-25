@@ -89,6 +89,14 @@ components:
           type: integer
           format: int64
           example: 10
+        employer_id:
+          type: integer
+          format: int64
+          example: 10
+        user_id:
+          type: integer
+          format: int64
+          example: 10
         job_title:
           type: string
           description: Job title to display in the portal
@@ -147,5 +155,4 @@ components:
       required:
         - code
         - message
-  
   

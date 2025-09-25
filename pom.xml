@@ -12,12 +12,13 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.0</version>
+        <version>3.2.4</version>
         <relativePath/>
     </parent>
 
     <properties>
         <java.version>21</java.version>
+        <mapstruct.version>1.6.3</mapstruct.version>
     </properties>
     
     <dependencies>
@@ -57,7 +58,6 @@
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
-            <version>6.1.0</version>
             <scope>provided</scope>
         </dependency>
 
@@ -65,16 +65,19 @@
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
-            <version>3.0.2</version>
         </dependency>
 
         <!-- Jakarta Annotation API -->
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
-            <version>2.1.1</version>
         </dependency>
         
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <type>jar</type>
+        </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -87,12 +90,9 @@
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-            <version>3.5.4</version>
-            <type>jar</type>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-                
     </dependencies>
     
     <build>
@@ -110,58 +110,36 @@
 
             <!-- OpenAPI Generator Plugin -->
             <plugin>
-    <groupId>org.openapitools</groupId>
-    <artifactId>openapi-generator-maven-plugin</artifactId>
-    <version>7.7.0</version>
-    <executions>
-
-        <!-- Execution 1: Generate only models into target -->
-        <execution>
-            <id>generate-models</id>
-            <goals>
-                <goal>generate</goal>
-            </goals>
-            <phase>generate-sources</phase>
-            <configuration>
-                <inputSpec>${project.basedir}/src/main/resources/static/swagger/swagger.yaml</inputSpec>
-                <generatorName>spring</generatorName>
-                <apiPackage>com.tex.api.generated.controller</apiPackage>
-                <modelPackage>com.tex.api.generated.model</modelPackage>
-                <output>${project.build.directory}/generated-sources/openapi</output>
-                <configOptions>
-                    <interfaceOnly>true</interfaceOnly>
+            <groupId>org.openapitools</groupId>
+            <artifactId>openapi-generator-maven-plugin</artifactId>
+            <version>7.8.0</version> <!-- pick the latest -->
+            <executions>
+              <execution>
+                <goals>
+                  <goal>generate</goal>
+                </goals>
+                <configuration>
+                  <inputSpec>${project.basedir}/src/main/resources/static/swagger/swagger.yaml</inputSpec>
+                  <generatorName>spring</generatorName>
+                  <apiPackage>com.tex.api.generated.controller</apiPackage>
+                  <modelPackage>com.tex.api.generated.model</modelPackage>
+                  <invokerPackage>com.tex.api.generated</invokerPackage>
+                  <configOptions>
                     <dateLibrary>java8</dateLibrary>
                     <useJakartaEe>true</useJakartaEe>
-                    <generateApis>false</generateApis> <!-- 🚫 Do not regenerate controllers -->
-                    <generateModels>true</generateModels> <!-- ✅ Only models -->
-                </configOptions>
-            </configuration>
-        </execution>
-
-        <!-- Execution 2: (Run ONCE) Generate controller interfaces into src/main/java -->
-        <execution>
-            <id>generate-controllers</id>
-            <goals>
-                <goal>generate</goal>
-            </goals>
-            <phase>none</phase> <!-- 🚫 Not part of normal build -->
-            <configuration>
-                <inputSpec>${project.basedir}/src/main/resources/static/swagger/swagger.yaml</inputSpec>
-                <generatorName>spring</generatorName>
-                <apiPackage>com.tex.api.controller</apiPackage>
-                <modelPackage>com.tex.api.generated.model</modelPackage>
-                <output>${project.basedir}</output> <!-- ✅ directly into src/main/java -->
-                <configOptions>
                     <interfaceOnly>true</interfaceOnly>
-                    <dateLibrary>java8</dateLibrary>
-                    <useJakartaEe>true</useJakartaEe>
-                    <generateApis>true</generateApis> <!-- ✅ Generate only controllers -->
-                    <generateModels>false</generateModels> <!-- 🚫 Skip models -->
-                </configOptions>
-            </configuration>
-            </execution>
-        </executions>
-        </plugin>
+                  </configOptions>
+                  <typeMappings>
+                    <typeMapping>Date=java.time.OffsetDateTime</typeMapping>
+                  </typeMappings>
+                  <importMappings>
+                    <importMapping>Date=java.time.OffsetDateTime</importMapping>
+                  </importMappings>
+                </configuration>
+              </execution>
+            </executions>
+            </plugin>
+
 
 
             <!-- Build Helper Plugin to include generated sources -->

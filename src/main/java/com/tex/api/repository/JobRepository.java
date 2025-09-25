@@ -1,8 +1,10 @@
 package com.tex.api.repository;
 
-import com.tex.api.generated.model.Job;
+import com.tex.api.entity.JobEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface JobRepository extends JpaRepository<Job, Long> {
+public interface JobRepository extends JpaRepository<JobEntity, Long> {
+
+    public JobEntity save(JobEntity entity);
 }
 
