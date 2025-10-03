@@ -15,7 +15,7 @@ public class JobMapper {
 
         // Only map fields present in the model
         entity.setJobId(model.getId());
-        entity.setEmployerId(model.getEmployerId());
+        entity.setCompanyId(model.getCompanyId());
         entity.setUserId(model.getUserId());
         entity.setJobTitle(model.getJobTitle());
         entity.setJobDescription(model.getJobDescription());
@@ -53,7 +53,7 @@ public class JobMapper {
         Job model = new Job();
 
         model.setId(entity.getJobId());
-        model.setEmployerId(entity.getEmployerId());
+        model.setCompanyId(entity.getCompanyId());
         model.setUserId(entity.getUserId());
         model.setJobTitle(entity.getJobTitle());
         model.setJobDescription(entity.getJobDescription());

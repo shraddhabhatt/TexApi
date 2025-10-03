@@ -12,8 +12,8 @@ public class JobEntity {
     @Column(name = "job_id")
     private Long jobId;
 
-    @Column(name = "employer_id", nullable = false)
-    private Long employerId; // Can be mapped to EmployerEntity if needed
+    @Column(name = "company_id", nullable = false)
+    private Long companyId; // Can be mapped to CompanyEntity if needed
 
     @Column(name = "user_id", nullable = false)
     private Long userId; // Can be mapped to UserEntity if needed
@@ -69,14 +69,14 @@ public class JobEntity {
         this.jobId = jobId;
     }
 
-    public Long getEmployerId() {
-        return employerId;
+    public Long getCompanyId() {
+        return companyId;
     }
 
-    public void setEmployerId(Long employerId) {
-        this.employerId = employerId;
+    public void setCompanyId(Long companyId) {
+        this.companyId = companyId;
     }
-
+    
     public Long getUserId() {
         return userId;
     }
